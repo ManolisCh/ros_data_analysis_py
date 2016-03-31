@@ -6,10 +6,10 @@ import matplotlib.pyplot as plt
 sampling_time = 0.2
 
 # Load from .txt files the data
-vel_error = np.genfromtxt('/home/manolis/Dropbox/experiment2_data/05_HI_vel_error.txt', delimiter=',', names=True)
-cmd_vel = np.genfromtxt('/home/manolis/Dropbox/experiment2_data/05_HI_cmd_vel.txt', delimiter=',', names=True)
-loa_has_changed = np.genfromtxt('/home/manolis/Dropbox/experiment2_data/05_HI_loa_changed.txt', delimiter=',', names=True)
-trial_start = np.genfromtxt('/home/manolis/Dropbox/experiment2_data/05_HI_start.txt', delimiter=',', names=True)
+vel_error = np.genfromtxt('/home/manolis/Dropbox/experiment2_data/03_HI_vel_error.txt', delimiter=',', names=True)
+cmd_vel = np.genfromtxt('/home/manolis/Dropbox/experiment2_data/03_HI_cmd_vel.txt', delimiter=',', names=True)
+loa_has_changed = np.genfromtxt('/home/manolis/Dropbox/experiment2_data/03_HI_loa_changed.txt', delimiter=',', names=True)
+trial_start = np.genfromtxt('/home/manolis/Dropbox/experiment2_data/03_HI_start.txt', delimiter=',', names=True)
 
 
 

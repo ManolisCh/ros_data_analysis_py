@@ -1,3 +1,5 @@
+from itertools import count
+
 __author__ = 'manolis'
 
 import numpy as np
@@ -93,6 +95,7 @@ def lossFunction(loa_prediction = np.array, loa_operator =np.array):
 
     total_cost = []
     time_min_found = 0
+    count = 0
 
     if ( sum(loa_prediction[1]) >=2 ):
 
@@ -107,12 +110,10 @@ def lossFunction(loa_prediction = np.array, loa_operator =np.array):
 
                   if (loa_operator[1][j]==1):
                       time_distance = abs( time_prediction - j) # the absolute distance in time between predition and human LOA change
-
+                      count+=1
                       if (time_distance < time_distance_min):
                           time_distance_min = time_distance
                           time_min_found =1
-                          print time_distance
-
 
               if (time_min_found == 1):
                  total_cost.append(time_distance_min)
@@ -121,9 +122,10 @@ def lossFunction(loa_prediction = np.array, loa_operator =np.array):
         total_cost = np.sum( np.array(total_cost) ) * 0.2
 
     else:
-        total_cost = 999999
+        total_cost = 20  # penalty in case no predictions are made
 
-
+    if (count<=0):
+        total_cost = 20  # penalty in case predictions cannot match with any operator LOA change
     return total_cost
 
 

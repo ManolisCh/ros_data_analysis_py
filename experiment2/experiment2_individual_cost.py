@@ -5,14 +5,14 @@ import matplotlib.pyplot as plt
 
 sampling_time = 0.2
 control_threshold = 0.1
-alpha = 0.01
+alpha = 0.04
 initializing_steps = 10
 
 # Load from .txt files the data
-vel_error = np.genfromtxt('/home/manolis/Dropbox/experiment2_data/06_HI_vel_error.txt', delimiter=',', names=True)
-cmd_vel = np.genfromtxt('/home/manolis/Dropbox/experiment2_data/06_HI_cmd_vel.txt', delimiter=',', names=True)
-loa_has_changed = np.genfromtxt('/home/manolis/Dropbox/experiment2_data/06_HI_loa_changed.txt', delimiter=',', names=True)
-trial_start = np.genfromtxt('/home/manolis/Dropbox/experiment2_data/06_HI_start.txt', delimiter=',', names=True)
+vel_error = np.genfromtxt('/home/manolis/Dropbox/experiment2_data/02_HI_vel_error.txt', delimiter=',', names=True)
+cmd_vel = np.genfromtxt('/home/manolis/Dropbox/experiment2_data/02_HI_cmd_vel.txt', delimiter=',', names=True)
+loa_has_changed = np.genfromtxt('/home/manolis/Dropbox/experiment2_data/02_HI_loa_changed.txt', delimiter=',', names=True)
+trial_start = np.genfromtxt('/home/manolis/Dropbox/experiment2_data/02_HI_start.txt', delimiter=',', names=True)
 
 
 # keep only secs and msecs
