@@ -109,7 +109,7 @@ def lossFunction(loa_prediction = np.array, loa_operator =np.array):
               for j in range(time_prediction-25, time_prediction+25): # just look +- 5 sec from the prediction
 
                   if (loa_operator[1][j]==1):
-                      time_distance = abs( time_prediction - j) # the absolute distance in time between predition and human LOA change
+                      time_distance = abs(time_prediction - j) # the absolute distance in time between predition and human LOA change
                       count+=1
                       if (time_distance < time_distance_min):
                           time_distance_min = time_distance

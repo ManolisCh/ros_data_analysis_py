@@ -6,15 +6,16 @@ import matplotlib.pyplot as plt
 
 sampling_time = 0.2
 a_start = 0.01
-a_end = 0.1
+a_end = 0.08
 thres_start = 0.05
-thres_end = 0.4
+thres_end = 0.1
 initializing_steps = 10
 best_cost = 100000000000
 
-path_vel_error = '/home/manolis/Desktop/raw_vel_error/'
-path_trial_start = '/home/manolis/Desktop/trial_start/'
-path_loa_changed = '/home/manolis/Desktop/loa_changed/'
+path_vector_error = '/home/manolis/Dropbox/experiment2_data/vector_vel_error/'
+path_vel_error = '/home/manolis/Dropbox/experiment2_data/linear_vel_error/'
+path_trial_start = '/home/manolis/Dropbox/experiment2_data/trial_start/'
+path_loa_changed = '/home/manolis/Dropbox/experiment2_data/loa_changed/'
 
 check_cost = []
 a_iteration_array = np.arange(a_start, a_end+0.01, 0.01)
