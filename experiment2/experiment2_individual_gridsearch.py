@@ -5,9 +5,9 @@ import matplotlib.pyplot as plt
 
 sampling_time = 0.2
 a_start = 0.01
-a_end = 0.1
+a_end = 0.08
 thres_start = 0.05
-thres_end = 0.4
+thres_end = 0.1
 initializing_steps = 10
 
 
@@ -32,7 +32,10 @@ loa_has_changed = uf.timeShiftData(trial_start, loa_has_changed, data_time_label
 result = uf.gridSearch(a_start=a_start, a_end=a_end, thres_start= thres_start, thres_end= thres_end,  sampling_time= sampling_time,
                        raw_error=raw_vel_error, initialization_steps=initializing_steps , loa_operator= loa_has_changed   )
 
-print result
+print('best a=', result[0])
+print('best thres = ', result[1])
+print('best cost = ', result[2])
+print('cost check', result[3])
 
 
 

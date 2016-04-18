@@ -5,12 +5,12 @@ import matplotlib.pyplot as plt
 
 
 sampling_time = 0.2
-a_start = 0.01
-a_end = 0.08
-thres_start = 0.05
+a_start = 0.02
+a_end = 0.06
+thres_start = 0.06
 thres_end = 0.1
 initializing_steps = 10
-best_cost = 100000000000
+best_cost = 100000000000000000
 
 path_vector_error = '/home/manolis/Dropbox/experiment2_data/vector_vel_error/'
 path_vel_error = '/home/manolis/Dropbox/experiment2_data/linear_vel_error/'
