@@ -95,7 +95,9 @@ def lossFunction(loa_prediction = np.array, loa_operator =np.array):
 
     total_cost = []
     time_min_found = 0
-    count = 0
+    time_ticks_offset = 25 # offset +- 5 sec from the prediction in ticks of 0.2sec
+    penalty_no_predictions = 100000000000000000000000 # penalty in case no predictions are made
+    penalty_no_matching = 6   # penalty for the predictions that do not match HI
 
     if ( sum(loa_prediction[1]) >=2 ):
 
@@ -103,29 +105,29 @@ def lossFunction(loa_prediction = np.array, loa_operator =np.array):
 
           if (loa_prediction[1][i] == 1):
 
-              time_prediction  = i
-              time_distance_min = 25+5 # time distance in ticks of 0.2secs
+              time_prediction = i
+              time_distance_min = time_ticks_offset + 5
+              match_found = 0  # denotes if a HI match is found for a prediction LOA change
 
-              for j in range(time_prediction-25, time_prediction+25): # just look +- 5 sec from the prediction
+              for j in range(time_prediction-time_ticks_offset, time_prediction+time_ticks_offset): # just look +- 5 sec from the prediction
 
                   if (loa_operator[1][j]==1):
                       time_distance = abs(time_prediction - j) # the absolute distance in time between predition and human LOA change
-                      count+=1
+                      match_found = 1
                       if (time_distance < time_distance_min):
                           time_distance_min = time_distance
-                          time_min_found =1
+                          match_found = 1
 
-              if (time_min_found == 1):
-                 total_cost.append(time_distance_min)
-                 time_min_found = 0
+              if (match_found == 1):
+                  total_cost.append(time_distance_min)
+              else:
+                  total_cost.append(penalty_no_matching)
 
         total_cost = np.sum( np.array(total_cost) ) * 0.2
 
     else:
-        total_cost = 20  # penalty in case no predictions are made
+        total_cost = penalty_no_predictions
 
-    if (count<=0):
-        total_cost = 20  # penalty in case predictions cannot match with any operator LOA change
     return total_cost
 
 
