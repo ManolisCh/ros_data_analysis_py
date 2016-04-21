@@ -8,9 +8,9 @@ crisp_error = fuzz.Antecedent(np.arange(0, 0.11, 0.01), 'error')
 fuzzy_change = fuzz.Consequent(np.arange(-1, 1.1, 0.1), 'change_control')
 
 # fuzzy memberships
-crisp_error['small'] = fuzz.trapmf(crisp_error.universe, [0, 0, 0.04, 0.06])
-crisp_error['medium'] = fuzz.trapmf(crisp_error.universe, [0.04, 0.07, 0.08, 0.09])
-crisp_error['large'] = fuzz.trapmf(crisp_error.universe, [0.08, 0.09, 0.1, 0.1])
+crisp_error['small'] = fuzz.trapmf(crisp_error.universe, [0, 0, 0.035, 0.06])
+crisp_error['medium'] = fuzz.trapmf(crisp_error.universe, [0.045, 0.06, 0.07, 0.085])
+crisp_error['large'] = fuzz.trapmf(crisp_error.universe, [0.07, 0.09, 0.1, 0.1])
 fuzzy_change['no_change'] = fuzz.trimf(fuzzy_change.universe, [-1, -1, 0])
 fuzzy_change['change'] = fuzz.trimf(fuzzy_change.universe, [0, 1, 1])
 

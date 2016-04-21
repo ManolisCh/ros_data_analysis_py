@@ -3,6 +3,7 @@ from itertools import count
 __author__ = 'manolis'
 
 import numpy as np
+import skfuzzy as fuzz
 
 
 def CalibrateTimeAndRt(offsetTime, rtData):
@@ -76,6 +77,9 @@ def thresholdController(moving_average = np.array, threshold = float ):
     count = 25
 
     for i in range(75, (moving_average[0].size-25) ): # ignoring first 15 sec and last 5 sec, sampling was 0.2, (15/0.2  = 75 steps)
+
+         if moving_average[1][i] > 0.1:
+            moving_average[1][i] = 0.1
 
          if (moving_average[1][i] >= threshold and count>=25):
 
@@ -163,3 +167,50 @@ def gridSearch(a_start= float, a_end = float, thres_start=float, thres_end=float
 
 
 
+# fuzzy controller
+
+def fuzzyController(moving_average = np.array):
+
+    change_loa = np.array( np.zeros( (2,moving_average[0].size) ) )
+    count = 25
+
+    # crisp variables universe of discourse
+    crisp_error = np.arange(0, 0.101, 0.001)
+    crisp_output = np.arange(-1, 1.01, 0.01)
+    # fuzzy membership functions
+    fuzzy_error_small = fuzz.trapmf(crisp_error, [0, 0, 0.035, 0.06])
+    fuzzy_error_medium = fuzz.trapmf(crisp_error, [0.045, 0.06, 0.07, 0.085])
+    fuzzy_error_large = fuzz.trapmf(crisp_error, [0.07, 0.09, 0.1, 0.1])
+    fuzzy_output_change = fuzz.trimf(crisp_output, [0, 1, 1])
+    fuzzy_output_no_change = fuzz.trimf(crisp_output, [-1, -1, 0])
+
+    for i in range(75, (moving_average[0].size-25) ): # ignoring first 15 sec and last 5 sec, sampling was 0.2, (15/0.2  = 75 steps)
+
+         if moving_average[1][i] > 0.1:
+             moving_average[1][i] = 0.1
+
+         # find degree of the fuzzy membership functions of input(s)
+         error_level_small = fuzz.interp_membership(crisp_error, fuzzy_error_small, moving_average[1][i])
+         error_level_medium = fuzz.interp_membership(crisp_error, fuzzy_error_medium, moving_average[1][i])
+         error_level_large = fuzz.interp_membership(crisp_error, fuzzy_error_large, moving_average[1][i])
+         # rule 1, if error is small or medium then no change (disjunction as max)
+         active_rule1 = np.fmax(error_level_small, error_level_medium)
+         output_activation_no = np.fmin(active_rule1, fuzzy_output_no_change)
+         # rule 2, if error is large then change
+         output_activation_change = np.fmin(error_level_large, fuzzy_output_change)
+         # Rule aggregation with max operator
+         aggregated = np.fmax(output_activation_no, output_activation_change)
+         # Defuzzification
+         output_decision = fuzz.defuzz(crisp_output, aggregated, 'mom')
+
+         if (output_decision > 0 and count>=25):
+
+            change_loa[1][i] = 1
+            count = 0
+
+         count +=1
+
+
+    change_loa[0] = moving_average[0]
+
+    return change_loa

@@ -4,9 +4,9 @@ import matplotlib.pyplot as plt
 
 
 sampling_time = 0.2
-control_threshold = 0.09
-alpha = 0.02
-initializing_steps = 10
+control_threshold = 0.07
+alpha = 0.06
+initializing_steps = 25
 
 # Load from .txt files the data
 vel_error = np.genfromtxt('/home/manolis/Dropbox/experiment2_data/03_HI_vel_error.txt', delimiter=',', names=True)
@@ -35,6 +35,7 @@ angular_vel = uf.timeShiftData(trial_start, cmd_vel, data_time_label= 'time', da
 
 smoothed_error = uf.expMovingAverage(vel_error, initializing_steps, alpha)
 loa_prediction = uf.thresholdController(smoothed_error, control_threshold)
+loa_prediction = uf.fuzzyController(smoothed_error)
 loa_has_changed = uf.augmentSize(loa_has_changed, smoothed_error[0], sampling_time)
 total_cost_participant = uf.lossFunction(loa_prediction, loa_has_changed)
 
