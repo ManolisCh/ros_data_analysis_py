@@ -100,7 +100,7 @@ def lossFunction(loa_prediction = np.array, loa_operator =np.array):
     total_cost = []
     time_min_found = 0
     time_ticks_offset = 25 # offset +- 5 sec from the prediction in ticks of 0.2sec
-    penalty_no_predictions = 100000000000000000000000 # penalty in case no predictions are made
+    penalty_no_predictions = 100000 # penalty in case no predictions are made
     penalty_no_matching = 6   # penalty for the predictions that do not match HI
 
     if ( sum(loa_prediction[1]) >=2 ):
